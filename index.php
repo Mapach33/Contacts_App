@@ -1,3 +1,13 @@
+<?php $Contacts = [
+    ["name" => "Alejandro" , "phone_number" => "910296033"],
+    ["name" => "Solmaria" , "phone_number" => "927625013"],
+    ["name" => "Nikol" , "phone_number" => "9997772323"],
+    ["name" => "Arellano" , "phone_number" => "999712666"],
+    ["name" => "Padilla" , "phone_number" => "99127231"],
+]   
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -58,39 +68,18 @@
     <div class="container pt-4 p-3">
       <div class="row">
         
+      <?php foreach ($Contacts as $contact) { ?>
         <div class="col-md-4 mb-3">
           <div class="card text-center">
             <div class="card-body">
-              <h3 class="card-tittle text-capitalize">Contact Name 1</h3>
-              <p class="m-2">910296033</p>
+              <h3 class="card-tittle text-capitalize"><?= $contact["name"] ?></h3>
+              <p class="m-2"><?= $contact["phone_number"] ?></p>
               <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
               <a href="#" class="btn btn-danger mb-2">Delete Contact</a>
             </div>
           </div>
         </div>
-
-        <div class="col-md-4 mb-3">
-          <div class="card text-center">
-            <div class="card-body">
-              <h3 class="card-tittle text-capitalize">Contact Name 2</h3>
-              <p class="m-2">910296033</p>
-              <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
-              <a href="#" class="btn btn-danger mb-2">Delete Contact</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-          <div class="card text-center">
-            <div class="card-body">
-              <h3 class="card-tittle text-capitalize">Contact Name 3</h3>
-              <p class="m-2">910296033</p>
-              <a href="#" class="btn btn-secondary mb-2">Edit Contact</a>
-              <a href="#" class="btn btn-danger mb-2">Delete Contact</a>
-            </div>
-          </div>
-        </div>
-
+      <?php } ?>
 
       </div>
     </div>
