@@ -1,19 +1,13 @@
 <?php
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $contact = [
-      "name" => $_POST["name"],
-      "phone_number" => $_POST["phone_number"],
-    ];
+  require "db.php";
 
-    if (file_exists("contacts.json")) {
-      $contacts = json_decode(file_get_contents("contacts.json"),true); 
-    }else {
-      $contacts = [];
-    }
-    
-    $contacts[] = $contact; 
-    file_put_contents("./contacts.json",json_encode($contacts));
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $phoneNumber = $_POST["phone_number"];
+
+    $stament = $conn->prepare("INSERt into contacts(name , phone_number) VALUES ('$name', '$phoneNumber')");
+    $stament->execute();  
     
     header("location: index.php");
   }
@@ -50,7 +44,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="./index.php">
         <img class="mr-2" src="./static/img/logo.png"/>
         Contacts App
       </a>

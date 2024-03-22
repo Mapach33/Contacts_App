@@ -1,9 +1,8 @@
 <?php 
-  if (file_exists("contacts.json")) {
-    $contacts = json_decode(file_get_contents("contacts.json"),true); 
-  }else {
-    $contacts = [];
-  }
+
+require "db.php";
+
+$contacts = $conn->query("SELECT * FROM contacts");
 
 ?>
 
@@ -37,7 +36,7 @@
 <body>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="./index.php">
         <img class="mr-2" src="./static/img/logo.png"/>
         Contacts App
       </a>
@@ -66,7 +65,7 @@
   <main>
     <div class="container pt-4 p-3">
       <div class="row">
-      <?php if (count($contacts) == 0) : ?>
+      <?php if (empty($contacts)) : ?>
         <div class="col-md-4 mx-auto">
           <div class="card card-body text-center">
             <p>No contacts saved yet</p>
