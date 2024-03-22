@@ -2,14 +2,21 @@
 
   require "db.php";
 
-  if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $phoneNumber = $_POST["phone_number"];
+  $error = null;
 
-    $stament = $conn->prepare("INSERt into contacts(name , phone_number) VALUES ('$name', '$phoneNumber')");
-    $stament->execute();  
-    
-    header("location: index.php");
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if(empty($_POST["name"]) || empty($_POST["phone_number"])){
+      $error = "Please fill all the fields"; 
+    }else if (strlen($_POST["phone_number"]) < 9) {
+      $error = "Phone must be at least 9 characters";
+    } else {
+      $statement = $conn->prepare("INSERt into contacts(name , phone_number) VALUES (:name, :phone_number)");
+      $statement->bindParam(":name",$_POST["name"]);
+      $statement->bindParam(":phone_number",$_POST["phone_number"]);
+      $statement->execute();  
+      
+      header("location: index.php");
+    }
   }
 ?>
 
@@ -77,6 +84,14 @@
           <div class="card">
             <div class="card-header">Add New Contact</div>
             <div class="card-body">
+
+              <!-- MESSAGE ERROR  -->
+              <?php if ($error != null) : ?>
+                <p class="text-danger">
+                  <?= $error ?>
+                </p>
+              <?php endif ?>
+
               <form method="POST" action="add.php">
                 <div class="mb-3 row">
                   <label for="name" class="col-md-4 col-form-label text-md-end">Name</label>
